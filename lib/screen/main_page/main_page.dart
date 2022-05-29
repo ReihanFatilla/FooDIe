@@ -23,37 +23,38 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(
-          width: 10,
-          margin: EdgeInsets.all(10.0),
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset("images/img_profile2.png", fit: BoxFit.cover)),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.search_sharp,
-              size: 25,
-              color: Colors.black87,
-            ),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.logout, size: 20, color: Colors.black87),
-            onPressed: () {
-              SystemNavigator.pop();
-            },
-          ),
-        ],
-        title: Text(
-          "Hi Reihan!",
-          style: TextStyle(fontSize: 20, color: Colors.black),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      // appBar: 
+      // AppBar(
+      //   // leading: Container(
+      //   //   width: 10,
+      //   //   margin: EdgeInsets.all(10.0),
+      //   //   child: ClipRRect(
+      //   //       borderRadius: BorderRadius.circular(20),
+      //   //       child: Image.asset("images/img_profile2.png", fit: BoxFit.cover)),
+      //   // ),
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(
+      //         Icons.search_sharp,
+      //         size: 25,
+      //         color: Colors.black87,
+      //       ),
+      //       onPressed: () {},
+      //     ),
+      //     IconButton(
+      //       icon: Icon(Icons.logout, size: 20, color: Colors.black87),
+      //       onPressed: () {
+      //         SystemNavigator.pop();
+      //       },
+      //     ),
+      //   ],
+      //   title: Text(
+      //     "FooDie",
+      //     style: TextStyle(fontSize: 20, color: Colors.black),
+      //   ),
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      // ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,

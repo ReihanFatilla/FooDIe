@@ -22,8 +22,9 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 30,),
               Text(
-                "Now Playing",
+                "Featured Recipes",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -33,9 +34,9 @@ class HomeScreen extends StatelessWidget {
                 height: 10,
               ),
               FutureBuilder(
-                  future: movie.getNowPlayingMovie(),
+                  future: movie.getFoodByPlace("Canadian"),
                   builder: (context, snapshot) => snapshot.data != null
-                      ? _carouselMovie(snapshot.data as List<Movie>)
+                      ? _carouselMovie(snapshot.data as List<Food>)
                       : _carouselMovie(MovieSkeletonData)),
               SizedBox(
                 height: 10,
@@ -51,25 +52,25 @@ class HomeScreen extends StatelessWidget {
                 height: 10,
               ),
               FutureBuilder(
-                  future: movie.getPopularMovie(),
+                  future: movie.getFoodByPlace("American"),
                   builder: (context, snapshot) => snapshot.data != null
-                      ? _listMovie(snapshot.data as List<Movie>)
+                      ? _listMovie(snapshot.data as List<Food>)
                       : _listMovie(MovieSkeletonData)),
             ],
           )),
     ));
   }
 
-  Widget _listMovie(List<Movie> movie) {
+  Widget _listMovie(List<Food> movie) {
     return ListView.builder(
-        itemBuilder: (context, index) => MovieItem(Movie: movie[index]),
+        itemBuilder: (context, index) => FoodItem(food: movie[index]),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemCount: movie.length);
   }
 
-  Widget _carouselMovie(List<Movie> movie) {
+  Widget _carouselMovie(List<Food> movie) {
     return Container(
       margin: EdgeInsets.only(top: 15, bottom: 15, ),
       child: CarouselSlider.builder(
@@ -83,7 +84,8 @@ class HomeScreen extends StatelessWidget {
           aspectRatio: 5.0,
         ),
         itemBuilder: (context, i, id) {
-          return MovieCarouselSlider(movie: movie[i]);
+          print(movie[i].imageUrl);
+          return FoodCarouselSlider(food: movie[i]);
         },
       ),
     );

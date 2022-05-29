@@ -4,7 +4,7 @@ import 'package:image_downloader/image_downloader.dart';
 import 'package:recipeapp/model/movie.dart';
 
 class ImageViewScreen extends StatelessWidget {
-  final Movie detailImage;
+  final Food detailImage;
   const ImageViewScreen({Key? key, required this.detailImage})
       : super(key: key);
 
@@ -16,9 +16,9 @@ class ImageViewScreen extends StatelessWidget {
           Container(
             color: Colors.black,
             child: Hero(
-                tag: detailImage.poster_path,
+                tag: detailImage.imageUrl,
                 child: CachedNetworkImage(
-              imageUrl: "https://www.themoviedb.org/t/p/w1280"+detailImage.poster_path,
+              imageUrl: detailImage.imageUrl,
               fit: BoxFit.contain,
               width: double.infinity,
               height: double.infinity,
@@ -70,7 +70,7 @@ class ImageViewScreen extends StatelessWidget {
                   ],
                 ),
                 IconButton(onPressed: () {
-                  ImageDownloader.downloadImage(detailImage.poster_path);
+                  ImageDownloader.downloadImage(detailImage.imageUrl);
                 },
                 icon: Icon(
                   Icons.download,

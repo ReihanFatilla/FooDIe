@@ -1,60 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:recipeapp/helper/utils.dart';
 import 'package:recipeapp/model/movie.dart';
+import 'package:recipeapp/model/movie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceHelper{
 
   // Add Bookmark
-  void addBookmark(Movie selectedMovie, context ) async {
+  void addBookmark(Food selectedFood, context ) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final String? previousDataString = prefs.getString('movie_key');
+    final String? previousDataString = prefs.getString('food_key');
 
-    if(previousDataString.toString().contains(selectedMovie.title.toString())){
-      ScaffoldMessenger.of(context).showSnackBar(HelperFunction.showMySnackBar(selectedMovie.title + " Is Already in Watch List"));
+    if(previousDataString.toString().contains(selectedFood.name.toString())){
+      ScaffoldMessenger.of(context).showSnackBar(HelperFunction.showMySnackBar(selectedFood.name + " Is Already in Watch List"));
       return;
     }
 
-    List<Movie>? previousData =
-        previousDataString == null ? null : Movie.decode(previousDataString);
+    List<Food>? previousData =
+        previousDataString == null ? null : Food.decode(previousDataString);
       
 
     if (previousData == null) {
-      final List<Movie> books = [selectedMovie];
-      prefs.setString('movie_key', Movie.encode(books));
+      final List<Food> books = [selectedFood];
+      prefs.setString('food_key', Food.encode(books));
     } else {
-      previousData.add(selectedMovie);
-      prefs.setString('movie_key', Movie.encode(previousData));
-      ScaffoldMessenger.of(context).showSnackBar(HelperFunction.showMySnackBar(selectedMovie.title + " Bookmarked!"));
-      print(prefs.getString("movie_key"));
+      previousData.add(selectedFood);
+      prefs.setString('food_key', Food.encode(previousData));
+      ScaffoldMessenger.of(context).showSnackBar(HelperFunction.showMySnackBar(selectedFood.name + " Bookmarked!"));
+      print(prefs.getString("food_key"));
     }
   }
 
   // Get Bookmark
-  Future<List<Movie>> getBookmark() async {
+  Future<List<Food>> getBookmark() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final String? booksString = await prefs.getString('movie_key');
+    final String? booksString = await prefs.getString('food_key');
 
-    final List<Movie> movie = Movie.decode(booksString!);
-    return movie;
+    final List<Food> food = Food.decode(booksString!);
+    return food;
   }
 
   void removeBookmark(int index, context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final previousDataString = prefs.getString('movie_key');
+    final previousDataString = prefs.getString('food_key');
 
-    List<Movie>? previousData =
-        previousDataString == null ? null : Movie.decode(previousDataString);
+    List<Food>? previousData =
+        previousDataString == null ? null : Food.decode(previousDataString);
 
     if (previousData == null) {
       return;
     } else {
-      final List<Movie> books = [...previousData];
-      ScaffoldMessenger.of(context).showSnackBar(HelperFunction.showMySnackBar(books[index].title + " Removed from Bookmark"));
+      final List<Food> books = [...previousData];
+      ScaffoldMessenger.of(context).showSnackBar(HelperFunction.showMySnackBar(books[index].name + " Removed from Bookmark"));
       books.remove(books[index]);
-      prefs.setString('movie_key', Movie.encode(books));
+      prefs.setString('food_key', Food.encode(books));
     }
   }
 
@@ -78,7 +79,7 @@ static Future clearBookmark() async {
 // // Read Data
 
 
-// static Future<BookmarkMovie> getBookmark(String title, String desc, String rating, String released, String poster_path) async {
+// static Future<BookmarkFood> getBookmark(String title, String desc, String rating, String released, String poster_path) async {
 //     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 //     String? mTitle = sharedPreferences.getString(title);
 //     String? mDesc = sharedPreferences.getString(desc);

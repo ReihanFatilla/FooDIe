@@ -43,13 +43,13 @@ class _SavedScreenState extends State<SavedScreen> {
             child: FutureBuilder(
                 future: prefs.getBookmark(),
                 builder: (context, snapshot) => snapshot.hasData
-                    ? _watchListMovie(snapshot.data as List<Movie>)
+                    ? _watchListMovie(snapshot.data as List<Food>)
                     : _watchListMovie(MovieSkeletonData))),
       ]),
     );
   }
 
-  Widget _watchListMovie(List<Movie> listMovie) {
+  Widget _watchListMovie(List<Food> listMovie) {
     return SizedBox(
       child: Container(
         margin: EdgeInsets.all(15),
@@ -98,9 +98,9 @@ class _SavedScreenState extends State<SavedScreen> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(14),
                           child: Hero(
-                            tag: listMovie[i].poster_path,
+                            tag: listMovie[i].imageUrl,
                             child: CachedNetworkImage(
-                              imageUrl: "https://www.themoviedb.org/t/p/w1280"+listMovie[i].poster_path,
+                              imageUrl: listMovie[i].imageUrl,
                               fit: BoxFit.cover,
                               width: double.infinity,
                               height: double.infinity,
@@ -119,7 +119,7 @@ class _SavedScreenState extends State<SavedScreen> {
                         height: 12,
                       ),
                       Text(
-                        listMovie[i].title,
+                        listMovie[i].name,
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -132,7 +132,7 @@ class _SavedScreenState extends State<SavedScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: Text(
-                          listMovie[i].desc,
+                          listMovie[i].Instructions,
                           style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
@@ -155,28 +155,14 @@ class _SavedScreenState extends State<SavedScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 4),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                listMovie[i].rating,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Colors.yellow,
-                                size: 17,
-                              ),
-                            ],
+                          child: Text(
+                            listMovie[i].Category,
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -189,7 +175,7 @@ class _SavedScreenState extends State<SavedScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetailScreen(
-                      movieFromHome: listMovie[i],
+                      foodFromHome: listMovie[i],
                       originNav: "saved",
                     ),
                   ),

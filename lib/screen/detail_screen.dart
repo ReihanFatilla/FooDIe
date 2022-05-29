@@ -10,10 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../sql/pref_helper.dart';
 
 class DetailScreen extends StatefulWidget {
-  final Movie movieFromHome;
+  final Food foodFromHome;
   final String originNav;
   const DetailScreen(
-      {Key? key, required this.movieFromHome, required this.originNav})
+      {Key? key, required this.foodFromHome, required this.originNav})
       : super(key: key);
 
   @override
@@ -61,18 +61,19 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                     IconButton(
                         onPressed: () {
-                          print(widget.movieFromHome.poster_path);
+                          print(widget.foodFromHome.imageUrl);
                           if (widget.originNav == "saved") {
                             removeWatchList(
-                              widget.movieFromHome.title,
+                              widget.foodFromHome.name,
                             );
                           } else {
                             addWatchlist(
-                              widget.movieFromHome.title,
-                              widget.movieFromHome.desc,
-                              widget.movieFromHome.rating,
-                              widget.movieFromHome.released,
-                              widget.movieFromHome.poster_path,
+                              widget.foodFromHome.name,
+                              widget.foodFromHome.Instructions,
+                              widget.foodFromHome.Category,
+                              widget.foodFromHome.area,
+                              widget.foodFromHome.imageUrl,
+                              widget.foodFromHome.id
                             );
                           }
                         },
@@ -91,20 +92,20 @@ class _DetailScreenState extends State<DetailScreen> {
                   height: 20,
                 ),
                 Hero(
-                  tag: widget.movieFromHome.poster_path,
+                  tag: widget.foodFromHome.imageUrl,
                   child: GestureDetector(
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ImageViewScreen(
-                          detailImage: widget.movieFromHome,
+                          detailImage: widget.foodFromHome,
                         ),
                       ),
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: CachedNetworkImage(
-                        imageUrl: "https://www.themoviedb.org/t/p/w1280"+widget.movieFromHome.poster_path,
+                        imageUrl: widget.foodFromHome.imageUrl,
                         fit: BoxFit.cover,
                         height: 250,
                         width: double.infinity,
@@ -128,15 +129,14 @@ class _DetailScreenState extends State<DetailScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(widget.movieFromHome.title,
+                            Text(widget.foodFromHome.name,
                                 style: TextStyle(
                                   fontSize: 23,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 overflow: TextOverflow.visible,),
                             Text(
-                              HelperFunction.formatMonth(
-                                  widget.movieFromHome.released),
+                              widget.foodFromHome.area,
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.normal,
@@ -154,28 +154,14 @@ class _DetailScreenState extends State<DetailScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                widget.movieFromHome.rating,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Colors.yellow,
-                                size: 19,
-                              ),
-                            ],
+                          child: Text(
+                            widget.foodFromHome.Category,
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -184,7 +170,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   height: 30,
                 ),
                 Text(
-                  "Description",
+                  "Instructions",
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -194,7 +180,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   height: 7,
                 ),
                 Text(
-                  widget.movieFromHome.desc,
+                  widget.foodFromHome.Instructions,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ],
@@ -219,14 +205,15 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   void addWatchlist(String title, String desc, String rating, String released,
-      String poster_path) {
+      String poster_path, String id) {
     final prefs = PreferenceHelper();
-    final bookmarkedMovie = Movie(
-      title: title,
-      desc: desc,
-      rating: rating,
-      released: released,
-      poster_path: poster_path,
+    final bookmarkedMovie = Food(
+      name: title,
+      Instructions: desc,
+      Category: rating,
+      area: released,
+      imageUrl: poster_path,
+      id: id,
     );
     prefs.addBookmark(bookmarkedMovie, context);
   }
@@ -234,13 +221,13 @@ class _DetailScreenState extends State<DetailScreen> {
   void removeWatchList(String title) async {
     final prefs = PreferenceHelper();
     SharedPreferences sharedPref = await SharedPreferences.getInstance();
-    var databasePref = sharedPref.getString("movie_key");
+    var databasePref = sharedPref.getString("food_key");
 
-    var decodedDb = Movie.decode(databasePref!);
+    var decodedDb = Food.decode(databasePref!);
 
     print(decodedDb);
-    final index = decodedDb.indexWhere((element) => element.title == title);
-    print(decodedDb[index].title);
+    final index = decodedDb.indexWhere((element) => element.name == title);
+    print(decodedDb[index].name);
     prefs.removeBookmark(index, context);
   }
 }
