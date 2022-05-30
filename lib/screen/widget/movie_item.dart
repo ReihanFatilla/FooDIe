@@ -41,7 +41,7 @@ class _FoodItemState extends State<FoodItem> {
                   fit: BoxFit.cover,
                   width: 500,
                   placeholder: (context, url) => Image.asset("images/skeleton_image_loading.gif", fit: BoxFit.cover,),
-                  errorWidget: (context, url, error) => new Icon(Icons.error),
+                  errorWidget: (context, url, error) => Image.asset("images/skeleton_image_loading.gif", fit: BoxFit.cover,),
                 ),
               ),
             ),
