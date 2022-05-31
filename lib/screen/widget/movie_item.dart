@@ -53,29 +53,32 @@ class _FoodItemState extends State<FoodItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    width: 70,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      child: Expanded(
-                        child: Container(
-                          color: Colors.black,
-                          child: Text(
-                            foodList[0].Category,
-                            maxLines: 1,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                  Wrap(
+                    children: [
+                      Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        child: Expanded(
+                          child: Container(
+                            color: Colors.black,
+                            child: Text(
+                              foodList[0].Category,
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
+                    ],
                   ),
                   SizedBox(
                     height: 10,

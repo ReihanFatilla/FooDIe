@@ -50,7 +50,7 @@ List<Food> MovieSkeletonData = [
       id: "--",
       name: "-------",
       imageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fmedium.com%2Fswlh%2Fflutter-shimmer-effect-be9c95e8f64d&psig=AOvVaw3-ObznuFlx-LSqO9sZXgp-&ust=1653833926137000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCLi1sdCxgvgCFQAAAAAdAAAAABAD",
-      Category: '------------------------------',
+      Category: '-----',
       Instructions: '------------------------------',
       area: '-----'),
       
